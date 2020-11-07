@@ -1,0 +1,22 @@
+- hosts: work_nodes
+  tasks:
+    - include_vars: ./node_info.yml 
+    
+    - name: setup CUSTOMER
+      shell: curl -v http://{{analytic1}}:8095/analytics/service -u 'Administrator:xxxx' -d 'statement=CREATE DATASET tpcc_customer ON TPCC WHERE `Category` = "CUSTOMER";'
+
+    - name: setup ORDERS
+      shell: curl -v http://{{analytic1}}:8095/analytics/service -u 'Administrator:xxxx' -d 'statement=CREATE DATASET tpcc_order ON TPCC WHERE `Category` = "ORDERS";'
+
+    - name: Link Local
+      shell: curl -v http://{{analytic1}}:8095/analytics/service -u 'Administrator:xxxx' -d 'statement=CONNECT Link Local;'
+
+    - name: idx_customer_state
+      shell: curl -v http://{{analytic1}}:8095/analytics/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_customer_state ON tpcc_customer(C_STATE:STRING);'
+
+    - name: idx_c_idx
+      shell: curl -v http://{{analytic1}}:8095/analytics/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_c_idx ON tpcc_customer(C_ID:bigint, C_D_ID:bigint, C_W_ID:bigint);'
+
+    - name: idx_o_idx
+      shell: curl -v http://{{analytic1}}:8095/analytics/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_o_idx ON tpcc_order(O_C_ID:bigint, O_D_ID:bigint, O_W_ID:bigint);'
+

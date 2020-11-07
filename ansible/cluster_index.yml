@@ -1,0 +1,21 @@
+
+- hosts: work_nodes
+  become: yes
+  become_user: root
+  tasks:    
+    - name: analytic setting
+      shell: curl -v http://vanadium.ics.uci.edu:8095/analytics/service -u Administrator:xxxx --data-urlencode 'statement=CREATE DATASET tpcc_customer ON TPCC WHERE `Category` = "CUSTOMER";'
+
+- hosts: work_nodes
+  become: yes
+  become_user: root
+  tasks:    
+    - name: analytic setting
+      shell: curl -v http://vanadium.ics.uci.edu:8095/analytics/service -u Administrator:xxxx --data-urlencode 'statement=CREATE DATASET tpcc_order ON TPCC WHERE `Category` = "ORDERS";'
+
+- hosts: work_nodes
+  become: yes
+  become_user: root
+  tasks:    
+    - name: analytic setting
+      shell: curl -v http://vanadium.ics.uci.edu:8095/analytics/service -u Administrator:xxxx --data-urlencode 'statement=CONNECT Link Local;'

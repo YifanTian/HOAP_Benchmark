@@ -1,0 +1,76 @@
+
+- hosts: cluster_nodes
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: download couchbase
+    shell: wget https://packages.couchbase.com/releases/6.6.0/couchbase-server-enterprise-6.6.0-centos7.x86_64.rpm
+
+  - name: uninstall couchbase
+    shell: sudo rpm -e couchbase-server
+
+  - name: remove files
+    shell: sudo rm -rf /opt/couchbase/
+
+  - name: Install package
+    shell: sudo rpm --install couchbase-server-enterprise-6.6.0-centos7.x86_64.rpm
+
+  - name: sleep
+    shell: sleep 5
+
+- hosts: work_nodes
+  become: yes
+  become_user: root
+  tasks:
+    - include_vars: ./node_info.yml 
+
+    - name: setup cluster1
+      shell: curl -u Administrator:password -v -X POST http://{{primary_nodes1}}:8091/nodes/self/controller/settings -d 'path=%2Fopt%2Fcouchbase%2Fvar%2Flib%2Fcouchbase%2Fdata&index_path=%2Fopt%2Fcouchbase%2Fvar%2Flib%2Fcouchbase%2Fdata&java_home=&cbas_path=%2Fopt%2Fcouchbase%2Fvar%2Flib%2Fcouchbase%2Fdata'
+    
+    - name: setup cluster2
+      shell: curl  -u Administrator:password -v -X POST http://{{primary_nodes1}}:8091/node/controller/rename -d 'hostname=127.0.0.1'
+    
+    - name: setup cluster3
+      shell: curl -u Administrator:password -v -X POST http://{{primary_nodes1}}:8091/node/controller/setupServices -d services=kv,index,n1ql
+    
+    - name: setup cluster4
+      shell: curl -u Administrator:password -v -X POST http://{{primary_nodes1}}:8091/settings/web -d password=xxxx -d username=Administrator -d port=8091
+    
+    - name: setup cluster5
+      shell: curl -X POST -u 'Administrator:xxxx' 'http://{{primary_nodes1}}:8091/settings/indexes' -d 'indexerThreads=0' -d 'logLevel=info' -d 'maxRollbackPoints=5' -d 'memorySnapshotInterval=200' -d 'stableSnapshotInterval=5000' -d 'storageMode=plasma'
+    
+    - name: setup n1ql2
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname=titanium.ics.uci.edu&user=Administrator&password=xxxx&services=kv,index,n1ql'
+
+    - name: setup n1ql3
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname=vanadium.ics.uci.edu&user=Administrator&password=xxxx&services=kv,index,n1ql'
+    
+    - name: setup n1ql4
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname=lawrencium.ics.uci.edu&user=Administrator&password=xxxx&services=kv,index,n1ql'
+
+    - name: setup n1ql5
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname={{analytic1}}&user=Administrator&password=xxxx&services=kv,index,n1ql'
+
+    - name: setup n1ql6
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname={{analytic2}}&user=Administrator&password=xxxx&services=kv,index,n1ql'
+
+    - name: setup n1ql7
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname={{analytic3}}&user=Administrator&password=xxxx&services=kv,index,n1ql'
+
+    - name: setup n1ql8
+      shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname={{analytic4}}&user=Administrator&password=xxxx&services=kv,index,n1ql'
+    
+    - name: setup setting
+      shell: curl -v -X POST -u Administrator:xxxx http://{{primary_nodes1}}:8091/pools/default -d "memoryQuota=10000" -d "indexMemoryQuota=2000" -d "ftsMemoryQuota=256" -d "cbasMemoryQuota=12000" -d "eventingMemoryQuota=256"
+
+    - name: rebalance
+      shell: curl -v -X POST -u Administrator:xxxx 'http://mendelevium.ics.uci.edu:8091/controller/rebalance' -d 'knownNodes=ns_1@128.195.52.212,ns_1@dubnium.ics.uci.edu,ns_1@fermium.ics.uci.edu,ns_1@lawrencium.ics.uci.edu,ns_1@titanium.ics.uci.edu,ns_1@rutherfordium.ics.uci.edu,ns_1@seaborgium.ics.uci.edu,ns_1@vanadium.ics.uci.edu'
+
+    - name: sleep
+      shell: sleep 20
+
+    - name: bucket
+      shell: curl -X POST -u Administrator:xxxx http://mendelevium.ics.uci.edu:8091/pools/default/buckets -d name=TPCC -d ramQuotaMB=8000 -d conflictResolutionType=lww -d evictionPolicy=fullEviction -d replicaNumber=0 -d bucketType=couchbase
+    
+
