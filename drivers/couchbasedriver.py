@@ -749,10 +749,10 @@ class CouchbaseDriver(AbstractDriver):
                 o.O_C_ID = c.C_ID \
                 AND o.O_D_ID = c.C_D_ID \
                 AND o.O_W_ID = c.C_W_ID \
-                WHERE c.Category = 'CUSTOMER' AND o.Category = 'ORDERS' AND c.C_STATE = 'ca'\
+                WHERE c.Category = 'CUSTOMER' AND o.Category = 'ORDERS' AND c.C_STATE = '{}'\
                 GROUP BY c.C_ID \
                 ORDER BY OC_COUNT DESC, c.C_ID ASC \
-                LIMIT 10;"
+                LIMIT 10;".format(c_state)
 
             res = N1QL_query(query, thread_id)
         print(res)

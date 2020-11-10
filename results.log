@@ -8947,3 +8947,9 @@
 11-05-2020 14:28:55 [<module>:253] INFO : Initializing TPC-C benchmark using MongodbDriver
 11-05-2020 14:28:55 [<module>:263] INFO : Loading TPC-C benchmark data using MongodbDriver
 11-05-2020 14:28:55 [<module>:273] INFO : start execution
+11-08-2020 23:17:51 [<module>:253] INFO : Initializing TPC-C benchmark using MongodbDriver
+11-08-2020 23:17:51 [<module>:263] INFO : Loading TPC-C benchmark data using MongodbDriver
+11-08-2020 23:17:51 [<module>:273] INFO : start execution
+11-08-2020 23:20:34 [<module>:253] INFO : Initializing TPC-C benchmark using MongodbDriver
+11-08-2020 23:20:34 [<module>:263] INFO : Loading TPC-C benchmark data using MongodbDriver
+11-08-2020 23:20:34 [<module>:273] INFO : start execution

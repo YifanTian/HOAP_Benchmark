@@ -1,0 +1,33 @@
+- hosts: work_nodes
+  tasks:
+    - include_vars: ./node_info.yml 
+    
+
+    - name: setup ITEM_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_ITEM ON `TPCC`(I_ID)  PARTITION BY HASH(META().id) WHERE `Category` = "ITEM";'
+
+    - name: setup WAREHOUSE_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_WAREHOUSE ON `TPCC`(W_ID)  PARTITION BY HASH(META().id) WHERE `Category` = "WAREHOUSE";'
+
+    - name: setup DISTRICT_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_DISTRICT ON `TPCC`(D_W_ID, D_ID)  PARTITION BY HASH(META().id) WHERE `Category` = "DISTRICT";'
+
+    - name: setup CUSTOMER_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_CUSTOMER ON `TPCC`(C_W_ID, C_D_ID, C_ID)  PARTITION BY HASH(META().id) WHERE `Category` = "CUSTOMER";'
+
+    - name: setup STOCK_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_STOCK ON `TPCC`(S_W_ID, S_I_ID)  PARTITION BY HASH(META().id) WHERE `Category` = "STOCK";'
+
+    - name: setup NEW_ORDER_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_NEW_ORDER ON `TPCC`(NO_W_ID, NO_D_ID, NO_O_ID) PARTITION BY HASH(META().id) WHERE `Category` = "NEW_ORDER";'
+
+    - name: setup ORDER_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_ORDER ON `TPCC`(O_W_ID, O_C_ID, O_D_ID) PARTITION BY HASH(META().id) WHERE `Category` = "ORDERS";'
+
+    - name: setup ORDERS_primary_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX idx_Primary_ORDER ON `TPCC`(O_ID, O_W_ID, O_D_ID) PARTITION BY HASH(META().id) WHERE `Category` = "ORDERS";'
+
+    - name: setup C_STATE_idx
+      shell: curl -v http://{{primary_nodes1}}:8093/query/service -u 'Administrator:xxxx' -d 'statement=CREATE INDEX C_STATE_idx ON `TPCC`(`C_STATE`) PARTITION BY HASH(META().id) WHERE (`Category` = "CUSTOMER");'
+
+
