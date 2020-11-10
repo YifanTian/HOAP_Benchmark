@@ -53,9 +53,6 @@
     - name: setup analytic4
       shell: curl -u Administrator:xxxx {{primary_nodes2}}:8091/controller/addNode -d 'hostname={{analytic4}}&user=Administrator&password=xxxx&services=cbas'
 
-    # - name: setup cluster8
-    #   shell: curl -u Administrator:xxxx mendelevium.ics.uci.edu:8091/controller/addNode -d 'hostname=vanadium.ics.uci.edu&user=Administrator&password=xxxx&services=kv,index,n1ql'
-
     - name: setup setting
       shell: curl -v -X POST -u Administrator:xxxx http://{{primary_nodes1}}:8091/pools/default -d "memoryQuota=10000" -d "indexMemoryQuota=2000" -d "ftsMemoryQuota=256" -d "cbasMemoryQuota=12000" -d "eventingMemoryQuota=256"
 
