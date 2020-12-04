@@ -261,6 +261,8 @@ if __name__ == '__main__':
     load_time = None
     if not args['no_load']:
         logging.info("Loading TPC-C benchmark data using %s", (driver))
+        if not os.path.isdir('./dataset'):
+            os.mkdir('./dataset')
         load_start = time.time()
         if args['clients'] == 1:
             l = loader.Loader(

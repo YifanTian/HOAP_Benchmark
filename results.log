@@ -4,3 +4,17 @@
 12-03-2020 18:00:14 [<module>:253] INFO : Initializing TPC-C benchmark using CouchbaseDriver
 12-03-2020 18:00:14 [<module>:263] INFO : Loading TPC-C benchmark data using CouchbaseDriver
 12-03-2020 18:00:14 [<module>:273] INFO : start execution
+12-03-2020 18:03:14 [<module>:253] INFO : Initializing TPC-C benchmark using CouchbaseDriver
+12-03-2020 18:03:14 [<module>:263] INFO : Loading TPC-C benchmark data using CouchbaseDriver
+12-03-2020 18:03:14 [<module>:273] INFO : start execution
+12-03-2020 18:04:15 [<module>:253] INFO : Initializing TPC-C benchmark using CouchbaseDriver
+12-03-2020 18:04:15 [<module>:263] INFO : Loading TPC-C benchmark data using CouchbaseDriver
+12-03-2020 18:04:52 [<module>:253] INFO : Initializing TPC-C benchmark using CouchbaseDriver
+12-03-2020 18:04:52 [<module>:263] INFO : Loading TPC-C benchmark data using CouchbaseDriver
+12-03-2020 18:04:52 [<module>:275] INFO : start execution
+12-03-2020 18:05:21 [<module>:253] INFO : Initializing TPC-C benchmark using CouchbaseDriver
+12-03-2020 18:05:21 [<module>:263] INFO : Loading TPC-C benchmark data using CouchbaseDriver
+12-03-2020 18:05:21 [<module>:275] INFO : start execution
+12-03-2020 18:05:41 [<module>:253] INFO : Initializing TPC-C benchmark using CouchbaseDriver
+12-03-2020 18:05:41 [<module>:263] INFO : Loading TPC-C benchmark data using CouchbaseDriver
+12-03-2020 18:05:41 [<module>:275] INFO : start execution
