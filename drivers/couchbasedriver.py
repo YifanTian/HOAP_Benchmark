@@ -279,7 +279,7 @@ class CouchbaseDriver(AbstractDriver):
     ]
 
     def __init__(self, ddl):
-        super(CouchbaseDriver, self).__init__("mongodb", ddl)
+        super(CouchbaseDriver, self).__init__("couchbase", ddl)
         self.no_transactions = False
         self.find_and_modify = True
         self.read_preference = "primary"
