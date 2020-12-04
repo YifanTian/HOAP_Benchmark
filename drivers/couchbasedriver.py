@@ -723,9 +723,9 @@ class CouchbaseDriver(AbstractDriver):
 
     def TPCC_analytic(self, params, thread_id):
         analytic_node = False 
+        c_state = rand.astring(constants.STATE, constants.STATE)
 
-        if analytic_node:
-            c_state = rand.astring(constants.STATE, constants.STATE)
+        if analytic_node:      
             query = 'SELECT c.C_ID, COUNT(*) AS OC_COUNT \
                 FROM \
                     tpcc_customer c, tpcc_order o \
