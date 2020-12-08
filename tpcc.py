@@ -249,6 +249,7 @@ if __name__ == '__main__':
     if config['reset']:
         logging.info("Reseting database")
     config['warehouses'] = args['warehouses']
+    print('config: ',config)
     driver.loadConfig(config)
     logging.info("Initializing TPC-C benchmark using %s", driver)
 

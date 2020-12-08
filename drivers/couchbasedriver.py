@@ -327,11 +327,10 @@ class CouchbaseDriver(AbstractDriver):
                 config[key] = str(CouchbaseDriver.DEFAULT_CONFIG[key][1])
 
         logging.debug("Default plus our config %s", pformat(config))
-        self.denormalize = config['denormalize'] == 'True'
+        self.denormalize = True ## config['denormalize'] == 'True'
         self.no_transactions = config['notransactions'] == 'True'
         self.shards = int(config['shards'])
         self.warehouses = config['warehouses']
-        print(config['findandmodify'])
         self.find_and_modify = config['findandmodify'] == 'True'
         self.causal_consistency = config['causal_consistency'] == 'True'
         self.retry_writes = config['retry_writes'] == 'True'
@@ -459,7 +458,7 @@ class CouchbaseDriver(AbstractDriver):
         return
 
     def loadFinishDistrict(self, w_id, d_id, f):
-        print('inside loadFinishDistrict')
+        print('loadFinishDistrict')
         if self.denormalize:
             logging.debug("Pushing %d denormalized ORDERS records for WAREHOUSE %d DISTRICT %d into TPCC", len(self.w_orders), w_id, d_id)
 
